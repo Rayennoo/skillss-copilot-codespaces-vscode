@@ -1,0 +1,113 @@
+<div class="checkout-container">
+  <div class="container">
+    @if (!orderPlaced) {
+      <h1>Checkout</h1>
+
+      <div class="checkout-content">
+        <div class="checkout-form-section">
+          <h2>Shipping Information</h2>
+          
+          <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="customerName">Full Name *</label>
+              <input 
+                type="text" 
+                id="customerName" 
+                formControlName="customerName"
+                placeholder="John Doe"
+                [class.error]="checkoutForm.get('customerName')?.invalid && checkoutForm.get('customerName')?.touched"
+              />
+              @if (getFieldError('customerName')) {
+                <span class="error-message">{{ getFieldError('customerName') }}</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="customerEmail">Email Address *</label>
+              <input 
+                type="email" 
+                id="customerEmail" 
+                formControlName="customerEmail"
+                placeholder="john.doe@example.com"
+                [class.error]="checkoutForm.get('customerEmail')?.invalid && checkoutForm.get('customerEmail')?.touched"
+              />
+              @if (getFieldError('customerEmail')) {
+                <span class="error-message">{{ getFieldError('customerEmail') }}</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="shippingAddress">Shipping Address *</label>
+              <textarea 
+                id="shippingAddress" 
+                formControlName="shippingAddress"
+                rows="4"
+                placeholder="123 Main St, Apt 4B, New York, NY 10001"
+                [class.error]="checkoutForm.get('shippingAddress')?.invalid && checkoutForm.get('shippingAddress')?.touched"
+              ></textarea>
+              @if (getFieldError('shippingAddress')) {
+                <span class="error-message">{{ getFieldError('shippingAddress') }}</span>
+              }
+            </div>
+
+            <button type="submit" class="place-order-btn" [disabled]="checkoutForm.invalid">
+              Place Order
+            </button>
+          </form>
+        </div>
+
+        <div class="order-summary-section">
+          <h2>Order Summary</h2>
+          
+          <div class="order-items">
+            @for (item of cartItems; track item.product.id) {
+              <div class="order-item">
+                <img [src]="item.product.imageUrl" [alt]="item.product.name" />
+                <div class="item-info">
+                  <h4>{{ item.product.name }}</h4>
+                  <p>Quantity: {{ item.quantity }}</p>
+                  <p class="price">${{ (item.product.price * item.quantity).toFixed(2) }}</p>
+                </div>
+              </div>
+            }
+          </div>
+
+          <div class="summary-totals">
+            <div class="summary-row">
+              <span>Subtotal:</span>
+              <span>${{ cartTotal.toFixed(2) }}</span>
+            </div>
+            <div class="summary-row">
+              <span>Shipping:</span>
+              <span>FREE</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total:</span>
+              <span>${{ cartTotal.toFixed(2) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="order-confirmation">
+        <div class="confirmation-icon">✓</div>
+        <h1>Order Placed Successfully!</h1>
+        <p class="confirmation-message">Thank you for your order. We've received your order and will process it soon.</p>
+        
+        @if (orderConfirmation) {
+          <div class="order-details">
+            <h2>Order Details</h2>
+            <p><strong>Order ID:</strong> #{{ orderConfirmation.id }}</p>
+            <p><strong>Email:</strong> {{ orderConfirmation.customerEmail }}</p>
+            <p><strong>Total Amount:</strong> ${{ orderConfirmation.totalAmount.toFixed(2) }}</p>
+            <p><strong>Status:</strong> {{ orderConfirmation.status }}</p>
+          </div>
+        }
+
+        <button (click)="continueShopping()" class="continue-shopping-btn">
+          Continue Shopping
+        </button>
+      </div>
+    }
+  </div>
+</div>

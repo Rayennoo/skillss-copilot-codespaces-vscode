@@ -1,0 +1,37 @@
+<header class="header">
+  <div class="container">
+    <div class="header-content">
+      <div class="logo">
+        <a routerLink="/products">
+          <h1>GroomStyle</h1>
+        </a>
+      </div>
+      
+      <nav class="nav-links">
+        <a routerLink="/products" routerLinkActive="active">Products</a>
+      </nav>
+
+      <div class="search-bar">
+        <input 
+          type="text" 
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="onSearch()"
+          placeholder="Search products..."
+          class="search-input"
+        />
+        <button (click)="onSearch()" class="search-btn">
+          <span>🔍</span>
+        </button>
+      </div>
+
+      <div class="cart-icon">
+        <a routerLink="/cart">
+          <span class="icon">🛒</span>
+          @if (cartItemCount > 0) {
+            <span class="badge">{{ cartItemCount }}</span>
+          }
+        </a>
+      </div>
+    </div>
+  </div>
+</header>

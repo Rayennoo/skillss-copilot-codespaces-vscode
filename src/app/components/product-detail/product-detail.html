@@ -1,0 +1,90 @@
+<div class="product-detail-container">
+  <div class="container">
+    @if (loading) {
+      <div class="loading">
+        <p>Loading product details...</p>
+      </div>
+    }
+
+    @if (error) {
+      <div class="error">
+        <p>{{ error }}</p>
+        <button (click)="goBack()" class="back-btn">Back to Products</button>
+      </div>
+    }
+
+    @if (product && !loading && !error) {
+      <button (click)="goBack()" class="back-btn">← Back to Products</button>
+
+      <div class="product-detail">
+        <div class="product-image-section">
+          <img [src]="product.imageUrl" [alt]="product.name" class="main-image" />
+        </div>
+
+        <div class="product-info-section">
+          <h1 class="product-name">{{ product.name }}</h1>
+          <p class="product-brand">by {{ product.brand }}</p>
+
+          @if (product.rating) {
+            <div class="product-rating">
+              @for (star of getStarRating(product.rating); track $index) {
+                <span class="star">{{ star }}</span>
+              }
+              <span class="rating-value">({{ product.rating }} stars)</span>
+            </div>
+          }
+
+          <p class="product-price">${{ product.price.toFixed(2) }}</p>
+
+          <div class="stock-info">
+            @if (product.stock > 0) {
+              <span class="in-stock">✓ In Stock ({{ product.stock }} available)</span>
+            } @else {
+              <span class="out-of-stock">✗ Out of Stock</span>
+            }
+          </div>
+
+          <p class="product-description">{{ product.description }}</p>
+
+          <div class="product-meta">
+            <p><strong>Category:</strong> {{ product.category }}</p>
+          </div>
+
+          @if (product.stock > 0) {
+            <div class="quantity-selector">
+              <label>Quantity:</label>
+              <div class="quantity-controls">
+                <button (click)="decrementQuantity()" [disabled]="quantity <= 1">-</button>
+                <span class="quantity-display">{{ quantity }}</span>
+                <button (click)="incrementQuantity()" [disabled]="quantity >= product.stock">+</button>
+              </div>
+            </div>
+
+            <button (click)="addToCart()" class="add-to-cart-btn">
+              Add to Cart
+            </button>
+          } @else {
+            <button class="add-to-cart-btn" disabled>
+              Out of Stock
+            </button>
+          }
+        </div>
+      </div>
+
+      @if (relatedProducts.length > 0) {
+        <div class="related-products">
+          <h2>Related Products</h2>
+          <div class="related-grid">
+            @for (relatedProduct of relatedProducts; track relatedProduct.id) {
+              <a [routerLink]="['/products', relatedProduct.id]" class="related-card">
+                <img [src]="relatedProduct.imageUrl" [alt]="relatedProduct.name" />
+                <h3>{{ relatedProduct.name }}</h3>
+                <p class="price">${{ relatedProduct.price.toFixed(2) }}</p>
+              </a>
+            }
+          </div>
+        </div>
+      }
+    }
+  </div>
+</div>

@@ -1,0 +1,167 @@
+[
+  {
+    "id": 1,
+    "name": "American Crew Fiber",
+    "description": "High hold with low shine. Fiber-like, resinous product helps thicken, texturize and increase fullness to hair. Provides a strong, pliable hold with a matte finish.",
+    "price": 17.99,
+    "imageUrl": "https://via.placeholder.com/400x400/2c3e50/ffffff?text=American+Crew+Fiber",
+    "category": "Pomade",
+    "stock": 45,
+    "brand": "American Crew",
+    "rating": 4.8
+  },
+  {
+    "id": 2,
+    "name": "Baxter Clay Pomade",
+    "description": "Natural finish hair pomade with strong hold. Perfect for short to medium length hair. Works great on thick, coarse, and curly hair.",
+    "price": 22.00,
+    "imageUrl": "https://via.placeholder.com/400x400/34495e/ffffff?text=Baxter+Clay+Pomade",
+    "category": "Pomade",
+    "stock": 30,
+    "brand": "Baxter",
+    "rating": 4.7
+  },
+  {
+    "id": 3,
+    "name": "Layrite Super Hold Pomade",
+    "description": "Water-based pomade with super hold and medium shine. Controls even the curliest and thickest hair. Washes out easily with water.",
+    "price": 15.99,
+    "imageUrl": "https://via.placeholder.com/400x400/2c3e50/ffffff?text=Layrite+Super+Hold",
+    "category": "Pomade",
+    "stock": 52,
+    "brand": "Layrite",
+    "rating": 4.6
+  },
+  {
+    "id": 4,
+    "name": "Suavecito Original Hold",
+    "description": "Water-based pomade with strong hold and medium shine. Perfect for classic slick-back styles, pompadours, or side parts.",
+    "price": 12.99,
+    "imageUrl": "https://via.placeholder.com/400x400/34495e/ffffff?text=Suavecito+Original",
+    "category": "Pomade",
+    "stock": 68,
+    "brand": "Suavecito",
+    "rating": 4.5
+  },
+  {
+    "id": 5,
+    "name": "American Crew Forming Cream",
+    "description": "Versatile styling cream with medium hold and natural shine. Provides pliable styling with a low shine finish.",
+    "price": 16.50,
+    "imageUrl": "https://via.placeholder.com/400x400/2c3e50/ffffff?text=American+Crew+Cream",
+    "category": "Wax",
+    "stock": 40,
+    "brand": "American Crew",
+    "rating": 4.4
+  },
+  {
+    "id": 6,
+    "name": "Baxter Hard Cream",
+    "description": "Water-based pomade/wax hybrid with strong hold and matte finish. Great for textured, messy styles.",
+    "price": 24.00,
+    "imageUrl": "https://via.placeholder.com/400x400/34495e/ffffff?text=Baxter+Hard+Cream",
+    "category": "Wax",
+    "stock": 25,
+    "brand": "Baxter",
+    "rating": 4.6
+  },
+  {
+    "id": 7,
+    "name": "Layrite Cement Clay",
+    "description": "Water-based clay with extreme hold and matte finish. Perfect for thick, unruly hair that needs maximum control.",
+    "price": 18.99,
+    "imageUrl": "https://via.placeholder.com/400x400/2c3e50/ffffff?text=Layrite+Clay",
+    "category": "Wax",
+    "stock": 35,
+    "brand": "Layrite",
+    "rating": 4.7
+  },
+  {
+    "id": 8,
+    "name": "American Crew Firm Hold Gel",
+    "description": "Provides high hold and high shine. Moisture-resistant formula for lasting control in humid conditions.",
+    "price": 14.99,
+    "imageUrl": "https://via.placeholder.com/400x400/34495e/ffffff?text=American+Crew+Gel",
+    "category": "Gel",
+    "stock": 50,
+    "brand": "American Crew",
+    "rating": 4.3
+  },
+  {
+    "id": 9,
+    "name": "American Crew Daily Shampoo",
+    "description": "Cleanses and invigorates hair and scalp. With naturally certified American Crew Citrus Mint that energizes and refreshes.",
+    "price": 10.99,
+    "imageUrl": "https://via.placeholder.com/400x400/2c3e50/ffffff?text=American+Crew+Shampoo",
+    "category": "Shampoo",
+    "stock": 75,
+    "brand": "American Crew",
+    "rating": 4.5
+  },
+  {
+    "id": 10,
+    "name": "Baxter Daily Fortifying Shampoo",
+    "description": "Strengthening shampoo for all hair types. Contains wheat protein and vitamin E to fortify hair.",
+    "price": 20.00,
+    "imageUrl": "https://via.placeholder.com/400x400/34495e/ffffff?text=Baxter+Shampoo",
+    "category": "Shampoo",
+    "stock": 42,
+    "brand": "Baxter",
+    "rating": 4.6
+  },
+  {
+    "id": 11,
+    "name": "American Crew Daily Conditioner",
+    "description": "Detangles and moisturizes hair without weighing it down. Enhanced with Rosemary and Menthol to invigorate scalp.",
+    "price": 11.99,
+    "imageUrl": "https://via.placeholder.com/400x400/2c3e50/ffffff?text=American+Crew+Conditioner",
+    "category": "Conditioner",
+    "stock": 60,
+    "brand": "American Crew",
+    "rating": 4.4
+  },
+  {
+    "id": 12,
+    "name": "Baxter Beard Oil",
+    "description": "Premium blend of natural oils to condition, soften, and add shine to facial hair. Non-greasy formula.",
+    "price": 28.00,
+    "imageUrl": "https://via.placeholder.com/400x400/34495e/ffffff?text=Baxter+Beard+Oil",
+    "category": "Beard Care",
+    "stock": 38,
+    "brand": "Baxter",
+    "rating": 4.9
+  },
+  {
+    "id": 13,
+    "name": "Suavecito Premium Blends Beard Oil",
+    "description": "Lightweight beard oil that moisturizes and softens beard hair. Contains natural oils including argan and jojoba.",
+    "price": 19.99,
+    "imageUrl": "https://via.placeholder.com/400x400/2c3e50/ffffff?text=Suavecito+Beard+Oil",
+    "category": "Beard Care",
+    "stock": 45,
+    "brand": "Suavecito",
+    "rating": 4.7
+  },
+  {
+    "id": 14,
+    "name": "Layrite Natural Matte Cream",
+    "description": "Water-based styling cream with medium hold and matte finish. Great for natural, textured looks.",
+    "price": 17.50,
+    "imageUrl": "https://via.placeholder.com/400x400/34495e/ffffff?text=Layrite+Matte+Cream",
+    "category": "Wax",
+    "stock": 33,
+    "brand": "Layrite",
+    "rating": 4.5
+  },
+  {
+    "id": 15,
+    "name": "Suavecito Matte Pomade",
+    "description": "Water-based pomade with strong hold and zero shine. Perfect for modern styles with a natural finish.",
+    "price": 13.99,
+    "imageUrl": "https://via.placeholder.com/400x400/2c3e50/ffffff?text=Suavecito+Matte",
+    "category": "Pomade",
+    "stock": 0,
+    "brand": "Suavecito",
+    "rating": 4.6
+  }
+]

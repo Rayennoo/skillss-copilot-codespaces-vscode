@@ -1,0 +1,93 @@
+<div class="product-list-container">
+  <div class="container">
+    <aside class="sidebar">
+      <h3>Categories</h3>
+      <ul class="category-list">
+        @for (category of categories; track category) {
+          <li 
+            [class.active]="selectedCategory === category"
+            (click)="filterByCategory(category)"
+          >
+            {{ category }}
+          </li>
+        }
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      @if (loading) {
+        <div class="loading">
+          <p>Loading products...</p>
+        </div>
+      }
+
+      @if (error) {
+        <div class="error">
+          <p>{{ error }}</p>
+        </div>
+      }
+
+      @if (!loading && !error) {
+        <div class="products-header">
+          <h2>
+            @if (selectedCategory === 'All') {
+              All Products
+            } @else {
+              {{ selectedCategory }}
+            }
+          </h2>
+          <p class="product-count">{{ filteredProducts.length }} products found</p>
+        </div>
+
+        @if (filteredProducts.length === 0) {
+          <div class="no-products">
+            <p>No products found matching your criteria.</p>
+          </div>
+        }
+
+        <div class="product-grid">
+          @for (product of filteredProducts; track product.id) {
+            <div class="product-card">
+              <a [routerLink]="['/products', product.id]" class="product-link">
+                <div class="product-image">
+                  <img [src]="product.imageUrl" [alt]="product.name" />
+                  @if (product.stock === 0) {
+                    <div class="out-of-stock-badge">Out of Stock</div>
+                  }
+                </div>
+                
+                <div class="product-info">
+                  <h3 class="product-name">{{ product.name }}</h3>
+                  <p class="product-brand">{{ product.brand }}</p>
+                  
+                  @if (product.rating) {
+                    <div class="product-rating">
+                      @for (star of getStarRating(product.rating); track $index) {
+                        <span class="star">{{ star }}</span>
+                      }
+                      <span class="rating-value">({{ product.rating }})</span>
+                    </div>
+                  }
+                  
+                  <p class="product-price">${{ product.price.toFixed(2) }}</p>
+                  
+                  <button 
+                    class="add-to-cart-btn"
+                    [disabled]="product.stock === 0"
+                    (click)="addToCart(product, $event)"
+                  >
+                    @if (product.stock === 0) {
+                      Out of Stock
+                    } @else {
+                      Add to Cart
+                    }
+                  </button>
+                </div>
+              </a>
+            </div>
+          }
+        </div>
+      }
+    </main>
+  </div>
+</div>
