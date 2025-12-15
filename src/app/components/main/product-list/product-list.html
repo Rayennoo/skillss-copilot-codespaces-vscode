@@ -1,0 +1,36 @@
+<div class="product-list-container">
+  <div class="filters-section">
+    <div class="search-bar">
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery" 
+        (input)="onSearch()"
+        placeholder="Search products..."
+        class="search-input"
+      />
+      <span class="search-icon">🔍</span>
+    </div>
+    
+    <div class="category-filters">
+      <button 
+        *ngFor="let category of categories"
+        [class.active]="selectedCategory === category"
+        (click)="onCategoryChange(category)"
+        class="category-btn"
+      >
+        {{ category }}
+      </button>
+    </div>
+  </div>
+
+  <div class="products-grid">
+    <app-product-card 
+      *ngFor="let product of products$ | async" 
+      [product]="product"
+    ></app-product-card>
+  </div>
+
+  <div *ngIf="(products$ | async)?.length === 0" class="no-products">
+    <p>No products found matching your criteria.</p>
+  </div>
+</div>

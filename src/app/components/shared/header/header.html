@@ -1,0 +1,21 @@
+<header class="header">
+  <div class="header-container">
+    <div class="logo">
+      <a routerLink="/products">
+        <h1>MEN'S GROOMING</h1>
+        <p class="tagline">Premium Hair & Beard Care</p>
+      </a>
+    </div>
+    
+    <nav class="nav-menu">
+      <a routerLink="/products" routerLinkActive="active" class="nav-link">Products</a>
+      <a routerLink="/cart" routerLinkActive="active" class="nav-link cart-link">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-text">Cart</span>
+        <span *ngIf="(cartItemCount$ | async) as count" class="cart-badge" [class.has-items]="count > 0">
+          {{ count }}
+        </span>
+      </a>
+    </nav>
+  </div>
+</header>

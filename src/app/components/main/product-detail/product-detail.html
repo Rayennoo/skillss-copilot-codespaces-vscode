@@ -1,0 +1,65 @@
+<div class="product-detail-container" *ngIf="product$ | async as product">
+  <button class="back-btn" (click)="goBack()">← Back to Products</button>
+  
+  <div class="product-detail-content">
+    <div class="product-image-section">
+      <img [src]="product.image" [alt]="product.name" class="product-image" />
+    </div>
+
+    <div class="product-info-section">
+      <span class="product-category">{{ product.category }}</span>
+      <h1 class="product-title">{{ product.name }}</h1>
+      
+      <div class="product-rating" *ngIf="product.rating">
+        <span class="stars">
+          <span *ngFor="let star of [1,2,3,4,5]" [class.filled]="star <= (product.rating || 0)">★</span>
+        </span>
+        <span class="rating-value">{{ product.rating }}/5</span>
+        <span class="reviews">({{ product.reviews }} reviews)</span>
+      </div>
+
+      <div class="product-price">
+        <span class="price">${{ product.price.toFixed(2) }}</span>
+      </div>
+
+      <div class="product-description">
+        <h3>Product Description</h3>
+        <p>{{ product.description }}</p>
+      </div>
+
+      <div class="stock-info" [class.low-stock]="product.stock < 10">
+        <span *ngIf="product.stock > 10">In Stock: {{ product.stock }} units available</span>
+        <span *ngIf="product.stock <= 10 && product.stock > 0">Only {{ product.stock }} left in stock!</span>
+        <span *ngIf="product.stock === 0" class="out-of-stock">Out of Stock</span>
+      </div>
+
+      <div class="quantity-selector">
+        <label>Quantity:</label>
+        <div class="quantity-controls">
+          <button (click)="decreaseQuantity()" [disabled]="quantity <= 1" class="qty-btn">-</button>
+          <input type="number" [(ngModel)]="quantity" min="1" [max]="product.stock" class="qty-input" />
+          <button (click)="increaseQuantity()" [disabled]="quantity >= product.stock" class="qty-btn">+</button>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button 
+          (click)="addToCart(product)" 
+          [disabled]="product.stock === 0 || addedToCart"
+          class="add-to-cart-btn"
+          [class.added]="addedToCart"
+        >
+          <span *ngIf="!addedToCart">{{ product.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}</span>
+          <span *ngIf="addedToCart">✓ Added to Cart</span>
+        </button>
+        
+        <button (click)="goToCart()" class="view-cart-btn">View Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="not-found" *ngIf="!(product$ | async)">
+  <h2>Product not found</h2>
+  <button (click)="goBack()" class="back-btn">← Back to Products</button>
+</div>
