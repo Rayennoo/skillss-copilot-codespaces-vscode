@@ -1,0 +1,255 @@
+<div class="dashboard-container">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <h1>Gestion des Produits Capillaires</h1>
+    <button class="btn btn-primary" (click)="showAddForm()" *ngIf="!showForm">
+      <span class="icon">+</span> Ajouter un Produit
+    </button>
+  </header>
+
+  <!-- Messages -->
+  <div class="messages">
+    <div class="alert alert-success" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+    <div class="alert alert-error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <div class="form-container" *ngIf="showForm">
+    <div class="form-header">
+      <h2>{{ isEditMode ? 'Modifier le Produit' : 'Nouveau Produit' }}</h2>
+      <button class="btn-close" (click)="cancelForm()">×</button>
+    </div>
+    
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <!-- Product Name -->
+        <div class="form-group">
+          <label for="name">Nom du Produit *</label>
+          <input 
+            type="text" 
+            id="name" 
+            formControlName="name"
+            placeholder="Ex: Shampoing Anti-Chute"
+            [class.invalid]="f['name'].invalid && f['name'].touched">
+          <span class="error-text" *ngIf="f['name'].invalid && f['name'].touched">
+            Le nom doit contenir au moins 3 caractères
+          </span>
+        </div>
+
+        <!-- Brand -->
+        <div class="form-group">
+          <label for="brand">Marque *</label>
+          <input 
+            type="text" 
+            id="brand" 
+            formControlName="brand"
+            placeholder="Ex: L'Oréal"
+            [class.invalid]="f['brand'].invalid && f['brand'].touched">
+          <span class="error-text" *ngIf="f['brand'].invalid && f['brand'].touched">
+            La marque doit contenir au moins 2 caractères
+          </span>
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+          <label for="category">Catégorie *</label>
+          <select 
+            id="category" 
+            formControlName="category"
+            [class.invalid]="f['category'].invalid && f['category'].touched">
+            <option value="">Sélectionnez une catégorie</option>
+            <option value="shampoing">Shampoing</option>
+            <option value="gel">Gel</option>
+            <option value="cire">Cire</option>
+            <option value="huile">Huile</option>
+            <option value="serum">Sérum</option>
+            <option value="autre">Autre</option>
+          </select>
+          <span class="error-text" *ngIf="f['category'].invalid && f['category'].touched">
+            Veuillez sélectionner une catégorie
+          </span>
+        </div>
+
+        <!-- Price -->
+        <div class="form-group">
+          <label for="price">Prix (€) *</label>
+          <input 
+            type="number" 
+            id="price" 
+            formControlName="price"
+            placeholder="0.00"
+            step="0.01"
+            min="0"
+            [class.invalid]="f['price'].invalid && f['price'].touched">
+          <span class="error-text" *ngIf="f['price'].invalid && f['price'].touched">
+            Le prix doit être supérieur ou égal à 0
+          </span>
+        </div>
+
+        <!-- Stock -->
+        <div class="form-group">
+          <label for="stock">Stock *</label>
+          <input 
+            type="number" 
+            id="stock" 
+            formControlName="stock"
+            placeholder="0"
+            min="0"
+            [class.invalid]="f['stock'].invalid && f['stock'].touched">
+          <span class="error-text" *ngIf="f['stock'].invalid && f['stock'].touched">
+            Le stock doit être supérieur ou égal à 0
+          </span>
+        </div>
+
+        <!-- In Stock Checkbox -->
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input 
+              type="checkbox" 
+              formControlName="inStock">
+            <span>En stock</span>
+          </label>
+        </div>
+
+        <!-- Image URL -->
+        <div class="form-group full-width">
+          <label for="imageUrl">URL de l'image *</label>
+          <input 
+            type="text" 
+            id="imageUrl" 
+            formControlName="imageUrl"
+            placeholder="https://exemple.com/image.jpg"
+            [class.invalid]="f['imageUrl'].invalid && f['imageUrl'].touched">
+          <span class="error-text" *ngIf="f['imageUrl'].invalid && f['imageUrl'].touched">
+            L'URL de l'image est requise
+          </span>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group full-width">
+          <label for="description">Description *</label>
+          <textarea 
+            id="description" 
+            formControlName="description"
+            rows="3"
+            placeholder="Description détaillée du produit..."
+            [class.invalid]="f['description'].invalid && f['description'].touched"></textarea>
+          <span class="error-text" *ngIf="f['description'].invalid && f['description'].touched">
+            La description doit contenir au moins 10 caractères
+          </span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="cancelForm()">
+          Annuler
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">
+          {{ isEditMode ? 'Mettre à Jour' : 'Ajouter' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Products List Section -->
+  <div class="products-section" *ngIf="!showForm">
+    <!-- Search and Filters -->
+    <div class="filters-bar">
+      <div class="search-box">
+        <input 
+          type="text" 
+          placeholder="Rechercher un produit, marque..."
+          (input)="onSearchChange($event)"
+          [value]="searchTerm">
+        <span class="search-icon">🔍</span>
+      </div>
+      
+      <div class="filter-group">
+        <label for="categoryFilter">Catégorie:</label>
+        <select 
+          id="categoryFilter" 
+          (change)="onCategoryChange($event)"
+          [value]="selectedCategory">
+          <option value="">Toutes</option>
+          <option value="shampoing">Shampoing</option>
+          <option value="gel">Gel</option>
+          <option value="cire">Cire</option>
+          <option value="huile">Huile</option>
+          <option value="serum">Sérum</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Products Count -->
+    <div class="products-count">
+      <p>{{ filteredProducts.length }} produit(s) trouvé(s)</p>
+    </div>
+
+    <!-- Products Table -->
+    <div class="table-container">
+      <table class="products-table" *ngIf="filteredProducts.length > 0">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Nom</th>
+            <th>Catégorie</th>
+            <th>Prix</th>
+            <th>Stock</th>
+            <th>Marque</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of filteredProducts" class="product-row">
+            <td class="product-image">
+              <img [src]="product.imageUrl" [alt]="product.name" loading="lazy">
+            </td>
+            <td class="product-name">
+              <strong>{{ product.name }}</strong>
+              <p class="product-description">{{ product.description }}</p>
+            </td>
+            <td>
+              <span class="badge" [class]="'badge-' + product.category">
+                {{ product.category }}
+              </span>
+            </td>
+            <td class="product-price">{{ product.price | number:'1.2-2' }} €</td>
+            <td class="product-stock">
+              <span [class.low-stock]="product.stock < 10 && product.stock > 0"
+                    [class.out-of-stock]="product.stock === 0">
+                {{ product.stock }}
+              </span>
+            </td>
+            <td>{{ product.brand }}</td>
+            <td>
+              <span class="status" [class.in-stock]="product.inStock" [class.out-of-stock]="!product.inStock">
+                {{ product.inStock ? 'En stock' : 'Rupture' }}
+              </span>
+            </td>
+            <td class="actions">
+              <button class="btn-action btn-edit" (click)="editProduct(product)" title="Modifier">
+                ✏️
+              </button>
+              <button class="btn-action btn-delete" (click)="deleteProduct(product)" title="Supprimer">
+                🗑️
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="filteredProducts.length === 0">
+        <div class="empty-icon">📦</div>
+        <h3>Aucun produit trouvé</h3>
+        <p>{{ searchTerm || selectedCategory ? 'Essayez de modifier vos filtres de recherche' : 'Ajoutez votre premier produit pour commencer' }}</p>
+      </div>
+    </div>
+  </div>
+</div>
