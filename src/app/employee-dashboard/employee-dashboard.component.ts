@@ -180,7 +180,6 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.showSuccess('Produit ajouté avec succès');
-          this.loadProducts();
           this.cancelForm();
         },
         error: (error) => {
@@ -199,7 +198,6 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.showSuccess('Produit mis à jour avec succès');
-          this.loadProducts();
           this.cancelForm();
         },
         error: (error) => {
@@ -219,7 +217,6 @@ export class EmployeeDashboardComponent implements OnInit, OnDestroy {
         .subscribe({
           next: () => {
             this.showSuccess('Produit supprimé avec succès');
-            this.loadProducts();
           },
           error: (error) => {
             this.showError('Erreur lors de la suppression du produit');
