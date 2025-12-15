@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { CartItem } from '../../../models/cart-item.model';
 import { CartService } from '../../../services/cart.service';
 import { OrderService } from '../../../services/order.service';
@@ -59,7 +59,7 @@ export class Checkout implements OnInit {
     this.total = this.cartService.getTotal();
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.checkoutForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
 
@@ -78,19 +78,24 @@ export class Checkout implements OnInit {
         }
       };
 
-      // Get current cart items
-      let cartItems: CartItem[] = [];
-      this.cartItems$.subscribe(items => cartItems = items).unsubscribe();
+      try {
+        // Get current cart items
+        const cartItems = await firstValueFrom(this.cartItems$);
 
-      // Create order
-      this.orderService.createOrder(customerInfo, cartItems, this.subtotal, this.tax, this.total)
-        .subscribe(order => {
-          // Clear cart
-          this.cartService.clearCart();
-          
-          // Navigate to confirmation
-          this.router.navigate(['/order-confirmation', order.id]);
-        });
+        // Create order
+        const order = await firstValueFrom(
+          this.orderService.createOrder(customerInfo, cartItems, this.subtotal, this.tax, this.total)
+        );
+
+        // Clear cart
+        this.cartService.clearCart();
+        
+        // Navigate to confirmation
+        this.router.navigate(['/order-confirmation', order.id]);
+      } catch (error) {
+        console.error('Error processing order:', error);
+        this.isSubmitting = false;
+      }
     }
   }
 

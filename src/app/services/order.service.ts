@@ -42,7 +42,7 @@ export class OrderService {
   }
 
   private generateOrderId(): string {
-    return 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    return 'ORD-' + Date.now() + '-' + Math.random().toString(36).substring(2, 11).toUpperCase();
   }
 
   private updateOrders(orders: Order[]): void {
