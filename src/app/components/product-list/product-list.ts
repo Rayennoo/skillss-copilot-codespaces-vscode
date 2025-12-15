@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
@@ -23,7 +23,8 @@ export class ProductList implements OnInit {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -43,13 +44,19 @@ export class ProductList implements OnInit {
     
     this.productService.getProducts().subscribe({
       next: (products) => {
-        this.products = products;
-        this.filteredProducts = products;
-        this.loading = false;
+        setTimeout(() => {
+          this.products = products;
+          this.filteredProducts = products;
+          this.loading = false;
+          this.cdr.detectChanges();
+        }, 0);
       },
       error: (err) => {
-        this.error = 'Failed to load products. Please try again later.';
-        this.loading = false;
+        setTimeout(() => {
+          this.error = 'Failed to load products. Please try again later.';
+          this.loading = false;
+          this.cdr.detectChanges();
+        }, 0);
         console.error('Error loading products:', err);
       }
     });

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProductService } from '../../services/product.service';
@@ -22,7 +22,8 @@ export class ProductDetail implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -38,13 +39,19 @@ export class ProductDetail implements OnInit {
 
     this.productService.getProductById(id).subscribe({
       next: (product) => {
-        this.product = product;
-        this.loading = false;
-        this.loadRelatedProducts(product.category);
+        setTimeout(() => {
+          this.product = product;
+          this.loading = false;
+          this.cdr.detectChanges();
+          this.loadRelatedProducts(product.category);
+        }, 0);
       },
       error: (err) => {
-        this.error = 'Product not found';
-        this.loading = false;
+        setTimeout(() => {
+          this.error = 'Product not found';
+          this.loading = false;
+          this.cdr.detectChanges();
+        }, 0);
         console.error('Error loading product:', err);
       }
     });
@@ -53,9 +60,12 @@ export class ProductDetail implements OnInit {
   loadRelatedProducts(category: string): void {
     this.productService.getProductsByCategory(category).subscribe({
       next: (products) => {
-        this.relatedProducts = products
-          .filter(p => p.id !== this.product?.id)
-          .slice(0, 4);
+        setTimeout(() => {
+          this.relatedProducts = products
+            .filter(p => p.id !== this.product?.id)
+            .slice(0, 4);
+          this.cdr.detectChanges();
+        }, 0);
       },
       error: (err) => {
         console.error('Error loading related products:', err);
